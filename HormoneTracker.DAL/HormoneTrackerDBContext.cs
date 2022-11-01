@@ -43,7 +43,7 @@ namespace HormoneTracker.DAL
             {
                 entity.ToTable("Admin");
 
-                entity.Property(e => e.AdminId).ValueGeneratedNever();
+                entity.Property(e => e.AdminId);
 
                 entity.Property(e => e.Email).HasMaxLength(50);
 
@@ -54,7 +54,7 @@ namespace HormoneTracker.DAL
             {
                 entity.ToTable("Analysis");
 
-                entity.Property(e => e.AnalysisId).ValueGeneratedNever();
+                entity.Property(e => e.AnalysisId);
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
@@ -86,14 +86,14 @@ namespace HormoneTracker.DAL
             {
                 entity.HasKey(e => e.DataId);
 
-                entity.Property(e => e.DataId).ValueGeneratedNever();
+                entity.Property(e => e.DataId);
             });
 
             modelBuilder.Entity<Doctor>(entity =>
             {
                 entity.ToTable("Doctor");
 
-                entity.Property(e => e.DoctorId).ValueGeneratedNever();
+                entity.Property(e => e.DoctorId);
 
                 entity.Property(e => e.Email).HasMaxLength(50);
 
@@ -112,7 +112,7 @@ namespace HormoneTracker.DAL
             {
                 entity.ToTable("Medicine");
 
-                entity.Property(e => e.MedicineId).ValueGeneratedNever();
+                entity.Property(e => e.MedicineId);
 
                 entity.Property(e => e.LastDoseDate).HasColumnType("datetime");
 
@@ -125,7 +125,7 @@ namespace HormoneTracker.DAL
             {
                 entity.ToTable("Patient");
 
-                entity.Property(e => e.PatientId).ValueGeneratedNever();
+                entity.Property(e => e.PatientId);
 
                 entity.Property(e => e.Email).HasMaxLength(50);
 
@@ -149,7 +149,7 @@ namespace HormoneTracker.DAL
             {
                 entity.ToTable("Product");
 
-                entity.Property(e => e.ProductId).ValueGeneratedNever();
+                entity.Property(e => e.ProductId);
             });
 
             modelBuilder.Entity<ProductDatum>(entity =>
@@ -167,14 +167,14 @@ namespace HormoneTracker.DAL
             {
                 entity.ToTable("Status");
 
-                entity.Property(e => e.StatusId).ValueGeneratedNever();
+                entity.Property(e => e.StatusId);
             });
 
             modelBuilder.Entity<Tip>(entity =>
             {
                 entity.ToTable("Tip");
 
-                entity.Property(e => e.TipId).ValueGeneratedNever();
+                entity.Property(e => e.TipId);
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
 

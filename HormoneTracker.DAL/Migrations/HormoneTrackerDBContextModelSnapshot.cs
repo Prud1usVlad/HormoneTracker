@@ -40,6 +40,7 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Admin", b =>
                 {
                     b.Property<int>("AdminId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -58,6 +59,7 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Analysis", b =>
                 {
                     b.Property<int>("AnalysisId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("Date")
@@ -84,6 +86,7 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Datum", b =>
                 {
                     b.Property<int>("DataId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -103,6 +106,7 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Doctor", b =>
                 {
                     b.Property<int>("DoctorId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -137,6 +141,7 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Medicine", b =>
                 {
                     b.Property<int>("MedicineId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int?>("AmountLast")
@@ -164,6 +169,7 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Patient", b =>
                 {
                     b.Property<int>("PatientId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int?>("DoctorId")
@@ -203,6 +209,7 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Discription")
@@ -232,6 +239,7 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Status", b =>
                 {
                     b.Property<int>("StatusId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -245,6 +253,7 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Tip", b =>
                 {
                     b.Property<int>("TipId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Comment")
