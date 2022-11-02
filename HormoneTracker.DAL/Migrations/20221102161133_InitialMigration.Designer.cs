@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HormoneTracker.DAL.Migrations
 {
     [DbContext(typeof(HormoneTrackerDBContext))]
-    [Migration("20221101155515_InitialMigration")]
+    [Migration("20221102161133_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,7 +42,10 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Admin", b =>
                 {
                     b.Property<int>("AdminId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdminId"), 1L, 1);
 
                     b.Property<string>("Email")
                         .HasMaxLength(50)
@@ -60,7 +63,10 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Analysis", b =>
                 {
                     b.Property<int>("AnalysisId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AnalysisId"), 1L, 1);
 
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime");
@@ -86,7 +92,10 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Datum", b =>
                 {
                     b.Property<int>("DataId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DataId"), 1L, 1);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -105,7 +114,10 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Doctor", b =>
                 {
                     b.Property<int>("DoctorId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"), 1L, 1);
 
                     b.Property<string>("Email")
                         .HasMaxLength(50)
@@ -139,7 +151,10 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Medicine", b =>
                 {
                     b.Property<int>("MedicineId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MedicineId"), 1L, 1);
 
                     b.Property<int?>("AmountLast")
                         .HasColumnType("int");
@@ -154,11 +169,16 @@ namespace HormoneTracker.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Period")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("MedicineId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Medicine", (string)null);
                 });
@@ -166,7 +186,10 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Patient", b =>
                 {
                     b.Property<int>("PatientId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientId"), 1L, 1);
 
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
@@ -205,7 +228,10 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
 
                     b.Property<string>("Discription")
                         .HasColumnType("nvarchar(max)");
@@ -218,23 +244,13 @@ namespace HormoneTracker.DAL.Migrations
                     b.ToTable("Product", (string)null);
                 });
 
-            modelBuilder.Entity("HormoneTracker.Core.Models.ProductDatum", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DataId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "DataId");
-
-                    b.ToTable("ProductData");
-                });
-
             modelBuilder.Entity("HormoneTracker.Core.Models.Status", b =>
                 {
                     b.Property<int>("StatusId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusId"), 1L, 1);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -247,7 +263,10 @@ namespace HormoneTracker.DAL.Migrations
             modelBuilder.Entity("HormoneTracker.Core.Models.Tip", b =>
                 {
                     b.Property<int>("TipId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TipId"), 1L, 1);
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
@@ -263,6 +282,22 @@ namespace HormoneTracker.DAL.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Tip", (string)null);
+                });
+
+            modelBuilder.Entity("ProductDatum", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("DataId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "DataId");
+
+                    b.HasIndex("DataId");
+
+                    b.ToTable("ProductData", (string)null);
                 });
 
             modelBuilder.Entity("AnalysisDatum", b =>
@@ -297,6 +332,16 @@ namespace HormoneTracker.DAL.Migrations
                     b.Navigation("Status");
                 });
 
+            modelBuilder.Entity("HormoneTracker.Core.Models.Medicine", b =>
+                {
+                    b.HasOne("HormoneTracker.Core.Models.Patient", "Patient")
+                        .WithMany("Medicines")
+                        .HasForeignKey("PatientId")
+                        .HasConstraintName("FK_Medicine_Patient");
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("HormoneTracker.Core.Models.Patient", b =>
                 {
                     b.HasOne("HormoneTracker.Core.Models.Doctor", "Doctor")
@@ -305,17 +350,6 @@ namespace HormoneTracker.DAL.Migrations
                         .HasConstraintName("FK_Patient_Doctor");
 
                     b.Navigation("Doctor");
-                });
-
-            modelBuilder.Entity("HormoneTracker.Core.Models.ProductDatum", b =>
-                {
-                    b.HasOne("HormoneTracker.Core.Models.Product", "Product")
-                        .WithMany("ProductData")
-                        .HasForeignKey("ProductId")
-                        .IsRequired()
-                        .HasConstraintName("FK_ProductData_Product");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("HormoneTracker.Core.Models.Tip", b =>
@@ -328,6 +362,21 @@ namespace HormoneTracker.DAL.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("ProductDatum", b =>
+                {
+                    b.HasOne("HormoneTracker.Core.Models.Datum", null)
+                        .WithMany()
+                        .HasForeignKey("DataId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ProductData_Data");
+
+                    b.HasOne("HormoneTracker.Core.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .IsRequired()
+                        .HasConstraintName("FK_ProductData_Product");
+                });
+
             modelBuilder.Entity("HormoneTracker.Core.Models.Doctor", b =>
                 {
                     b.Navigation("Patients");
@@ -337,12 +386,9 @@ namespace HormoneTracker.DAL.Migrations
                 {
                     b.Navigation("Analyses");
 
-                    b.Navigation("Tips");
-                });
+                    b.Navigation("Medicines");
 
-            modelBuilder.Entity("HormoneTracker.Core.Models.Product", b =>
-                {
-                    b.Navigation("ProductData");
+                    b.Navigation("Tips");
                 });
 
             modelBuilder.Entity("HormoneTracker.Core.Models.Status", b =>

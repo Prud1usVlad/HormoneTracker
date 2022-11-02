@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HormoneTracker.Core.Models;
 using HormoneTracker.DAL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HormoneTracker.Controllers.CrudControllers
 {
@@ -23,6 +24,7 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Patients
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Patient>>> GetPatients()
         {
             return await _context.Patients.ToListAsync();
@@ -30,6 +32,7 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Patients/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Patient>> GetPatient(int id)
         {
             var patient = await _context.Patients.FindAsync(id);
@@ -45,6 +48,7 @@ namespace HormoneTracker.Controllers.CrudControllers
         // PUT: api/Patients/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutPatient(int id, Patient patient)
         {
             if (id != patient.PatientId)
@@ -76,6 +80,7 @@ namespace HormoneTracker.Controllers.CrudControllers
         // POST: api/Patients
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Patient>> PostPatient(Patient patient)
         {
             _context.Patients.Add(patient);
@@ -100,6 +105,7 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // DELETE: api/Patients/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeletePatient(int id)
         {
             var patient = await _context.Patients.FindAsync(id);

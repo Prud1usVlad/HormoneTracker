@@ -13,50 +13,50 @@ namespace HormoneTracker.Controllers.CrudControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DataController : ControllerBase
+    public class TipsController : ControllerBase
     {
         private readonly HormoneTrackerDBContext _context;
 
-        public DataController(HormoneTrackerDBContext context)
+        public TipsController(HormoneTrackerDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Data
+        // GET: api/Tips
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Datum>>> GetData()
+        public async Task<ActionResult<IEnumerable<Tip>>> GetTips()
         {
-            return await _context.Data.ToListAsync();
+            return await _context.Tips.ToListAsync();
         }
 
-        // GET: api/Data/5
+        // GET: api/Tips/5
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<Datum>> GetDatum(int id)
+        public async Task<ActionResult<Tip>> GetTip(int id)
         {
-            var datum = await _context.Data.FindAsync(id);
+            var tip = await _context.Tips.FindAsync(id);
 
-            if (datum == null)
+            if (tip == null)
             {
                 return NotFound();
             }
 
-            return datum;
+            return tip;
         }
 
-        // PUT: api/Data/5
+        // PUT: api/Tips/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> PutDatum(int id, Datum datum)
+        public async Task<IActionResult> PutTip(int id, Tip tip)
         {
-            if (id != datum.DataId)
+            if (id != tip.TipId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(datum).State = EntityState.Modified;
+            _context.Entry(tip).State = EntityState.Modified;
 
             try
             {
@@ -64,7 +64,7 @@ namespace HormoneTracker.Controllers.CrudControllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DatumExists(id))
+                if (!TipExists(id))
                 {
                     return NotFound();
                 }
@@ -77,52 +77,38 @@ namespace HormoneTracker.Controllers.CrudControllers
             return NoContent();
         }
 
-        // POST: api/Data
+        // POST: api/Tips
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<Datum>> PostDatum(Datum datum)
+        public async Task<ActionResult<Tip>> PostTip(Tip tip)
         {
-            _context.Data.Add(datum);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (DatumExists(datum.DataId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _context.Tips.Add(tip);
+            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDatum", new { id = datum.DataId }, datum);
+            return CreatedAtAction("GetTip", new { id = tip.TipId }, tip);
         }
 
-        // DELETE: api/Data/5
+        // DELETE: api/Tips/5
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> DeleteDatum(int id)
+        public async Task<IActionResult> DeleteTip(int id)
         {
-            var datum = await _context.Data.FindAsync(id);
-            if (datum == null)
+            var tip = await _context.Tips.FindAsync(id);
+            if (tip == null)
             {
                 return NotFound();
             }
 
-            _context.Data.Remove(datum);
+            _context.Tips.Remove(tip);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool DatumExists(int id)
+        private bool TipExists(int id)
         {
-            return _context.Data.Any(e => e.DataId == id);
+            return _context.Tips.Any(e => e.TipId == id);
         }
     }
 }

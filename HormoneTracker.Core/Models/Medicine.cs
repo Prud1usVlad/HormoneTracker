@@ -11,5 +11,8 @@ namespace HormoneTracker.Core.Models
         public int? AmountLast { get; set; }
         public string? Period { get; set; }
         public DateTime? LastDoseDate { get; set; }
+        public int? PatientId { get; set; }
+
+        public virtual Patient? Patient { get; set; }
     }
 }

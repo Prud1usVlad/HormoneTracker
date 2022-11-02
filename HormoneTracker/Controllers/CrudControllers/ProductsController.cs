@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HormoneTracker.Core.Models;
 using HormoneTracker.DAL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HormoneTracker.Controllers.CrudControllers
 {
@@ -23,6 +24,7 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Products
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             return await _context.Products.ToListAsync();
@@ -30,6 +32,7 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Products/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -45,6 +48,7 @@ namespace HormoneTracker.Controllers.CrudControllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
             if (id != product.ProductId)
@@ -76,6 +80,7 @@ namespace HormoneTracker.Controllers.CrudControllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
             _context.Products.Add(product);
@@ -100,6 +105,7 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);

@@ -7,13 +7,13 @@ namespace HormoneTracker.Core.Models
     {
         public Product()
         {
-            ProductData = new HashSet<ProductDatum>();
+            Data = new HashSet<Datum>();
         }
 
         public int ProductId { get; set; }
         public string? Name { get; set; }
         public string? Discription { get; set; }
 
-        public virtual ICollection<ProductDatum> ProductData { get; set; }
+        public virtual ICollection<Datum> Data { get; set; }
     }
 }

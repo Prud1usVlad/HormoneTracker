@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HormoneTracker.Core.Models;
 using HormoneTracker.DAL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HormoneTracker.Controllers.CrudControllers
 {
@@ -23,6 +24,7 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Analyses
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Analysis>>> GetAnalyses()
         {
             return await _context.Analyses.ToListAsync();
@@ -30,6 +32,7 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Analyses/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Analysis>> GetAnalysis(int id)
         {
             var analysis = await _context.Analyses.FindAsync(id);
@@ -45,6 +48,7 @@ namespace HormoneTracker.Controllers.CrudControllers
         // PUT: api/Analyses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutAnalysis(int id, Analysis analysis)
         {
             if (id != analysis.AnalysisId)
@@ -76,6 +80,7 @@ namespace HormoneTracker.Controllers.CrudControllers
         // POST: api/Analyses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Analysis>> PostAnalysis(Analysis analysis)
         {
             _context.Analyses.Add(analysis);
@@ -100,6 +105,7 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // DELETE: api/Analyses/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteAnalysis(int id)
         {
             var analysis = await _context.Analyses.FindAsync(id);

@@ -24,7 +24,6 @@ namespace HormoneTracker.DAL
         public virtual DbSet<Medicine> Medicines { get; set; } = null!;
         public virtual DbSet<Patient> Patients { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
-        public virtual DbSet<ProductDatum> ProductData { get; set; } = null!;
         public virtual DbSet<Status> Statuses { get; set; } = null!;
         public virtual DbSet<Tip> Tips { get; set; } = null!;
 
@@ -43,8 +42,6 @@ namespace HormoneTracker.DAL
             {
                 entity.ToTable("Admin");
 
-                entity.Property(e => e.AdminId);
-
                 entity.Property(e => e.Email).HasMaxLength(50);
 
                 entity.Property(e => e.Password).HasMaxLength(50);
@@ -53,8 +50,6 @@ namespace HormoneTracker.DAL
             modelBuilder.Entity<Analysis>(entity =>
             {
                 entity.ToTable("Analysis");
-
-                entity.Property(e => e.AnalysisId);
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
@@ -85,15 +80,11 @@ namespace HormoneTracker.DAL
             modelBuilder.Entity<Datum>(entity =>
             {
                 entity.HasKey(e => e.DataId);
-
-                entity.Property(e => e.DataId);
             });
 
             modelBuilder.Entity<Doctor>(entity =>
             {
                 entity.ToTable("Doctor");
-
-                entity.Property(e => e.DoctorId);
 
                 entity.Property(e => e.Email).HasMaxLength(50);
 
@@ -112,20 +103,21 @@ namespace HormoneTracker.DAL
             {
                 entity.ToTable("Medicine");
 
-                entity.Property(e => e.MedicineId);
-
                 entity.Property(e => e.LastDoseDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Name).HasMaxLength(50);
 
                 entity.Property(e => e.Period).HasMaxLength(50);
+
+                entity.HasOne(d => d.Patient)
+                    .WithMany(p => p.Medicines)
+                    .HasForeignKey(d => d.PatientId)
+                    .HasConstraintName("FK_Medicine_Patient");
             });
 
             modelBuilder.Entity<Patient>(entity =>
             {
                 entity.ToTable("Patient");
-
-                entity.Property(e => e.PatientId);
 
                 entity.Property(e => e.Email).HasMaxLength(50);
 
@@ -149,32 +141,30 @@ namespace HormoneTracker.DAL
             {
                 entity.ToTable("Product");
 
-                entity.Property(e => e.ProductId);
-            });
+                entity.HasMany(d => d.Data)
+                    .WithMany(p => p.Products)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "ProductDatum",
+                        l => l.HasOne<Datum>().WithMany().HasForeignKey("DataId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ProductData_Data"),
+                        r => r.HasOne<Product>().WithMany().HasForeignKey("ProductId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ProductData_Product"),
+                        j =>
+                        {
+                            j.HasKey("ProductId", "DataId");
 
-            modelBuilder.Entity<ProductDatum>(entity =>
-            {
-                entity.HasKey(e => new { e.ProductId, e.DataId });
+                            j.ToTable("ProductData");
 
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.ProductData)
-                    .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ProductData_Product");
+                            j.IndexerProperty<int>("ProductId").ValueGeneratedOnAdd();
+                        });
             });
 
             modelBuilder.Entity<Status>(entity =>
             {
                 entity.ToTable("Status");
-
-                entity.Property(e => e.StatusId);
             });
 
             modelBuilder.Entity<Tip>(entity =>
             {
                 entity.ToTable("Tip");
-
-                entity.Property(e => e.TipId);
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
 

@@ -13,7 +13,8 @@ namespace HormoneTracker.DAL.Migrations
                 name: "Admin",
                 columns: table => new
                 {
-                    AdminId = table.Column<int>(type: "int", nullable: false),
+                    AdminId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
@@ -26,7 +27,8 @@ namespace HormoneTracker.DAL.Migrations
                 name: "Data",
                 columns: table => new
                 {
-                    DataId = table.Column<int>(type: "int", nullable: false),
+                    DataId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Value = table.Column<double>(type: "float", nullable: true),
                     NormCoefficient = table.Column<double>(type: "float", nullable: true)
@@ -40,7 +42,8 @@ namespace HormoneTracker.DAL.Migrations
                 name: "Doctor",
                 columns: table => new
                 {
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     MidName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -54,26 +57,11 @@ namespace HormoneTracker.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Medicine",
-                columns: table => new
-                {
-                    MedicineId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Discription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AmountLast = table.Column<int>(type: "int", nullable: true),
-                    Period = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    LastDoseDate = table.Column<DateTime>(type: "datetime", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Medicine", x => x.MedicineId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Product",
                 columns: table => new
                 {
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Discription = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -86,7 +74,8 @@ namespace HormoneTracker.DAL.Migrations
                 name: "Status",
                 columns: table => new
                 {
-                    StatusId = table.Column<int>(type: "int", nullable: false),
+                    StatusId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -98,7 +87,8 @@ namespace HormoneTracker.DAL.Migrations
                 name: "Patient",
                 columns: table => new
                 {
-                    PatientId = table.Column<int>(type: "int", nullable: false),
+                    PatientId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     MidName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -128,6 +118,11 @@ namespace HormoneTracker.DAL.Migrations
                 {
                     table.PrimaryKey("PK_ProductData", x => new { x.ProductId, x.DataId });
                     table.ForeignKey(
+                        name: "FK_ProductData_Data",
+                        column: x => x.DataId,
+                        principalTable: "Data",
+                        principalColumn: "DataId");
+                    table.ForeignKey(
                         name: "FK_ProductData_Product",
                         column: x => x.ProductId,
                         principalTable: "Product",
@@ -138,7 +133,8 @@ namespace HormoneTracker.DAL.Migrations
                 name: "Analysis",
                 columns: table => new
                 {
-                    AnalysisId = table.Column<int>(type: "int", nullable: false),
+                    AnalysisId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PatientId = table.Column<int>(type: "int", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime", nullable: true),
                     StatusId = table.Column<int>(type: "int", nullable: true),
@@ -160,10 +156,34 @@ namespace HormoneTracker.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Medicine",
+                columns: table => new
+                {
+                    MedicineId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Discription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AmountLast = table.Column<int>(type: "int", nullable: true),
+                    Period = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    LastDoseDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    PatientId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Medicine", x => x.MedicineId);
+                    table.ForeignKey(
+                        name: "FK_Medicine_Patient",
+                        column: x => x.PatientId,
+                        principalTable: "Patient",
+                        principalColumn: "PatientId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tip",
                 columns: table => new
                 {
-                    TipId = table.Column<int>(type: "int", nullable: false),
+                    TipId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PatientId = table.Column<int>(type: "int", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime", nullable: true)
@@ -216,9 +236,19 @@ namespace HormoneTracker.DAL.Migrations
                 column: "DataId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Medicine_PatientId",
+                table: "Medicine",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Patient_DoctorId",
                 table: "Patient",
                 column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductData_DataId",
+                table: "ProductData",
+                column: "DataId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tip_PatientId",

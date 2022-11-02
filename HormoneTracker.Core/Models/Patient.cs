@@ -8,6 +8,7 @@ namespace HormoneTracker.Core.Models
         public Patient()
         {
             Analyses = new HashSet<Analysis>();
+            Medicines = new HashSet<Medicine>();
             Tips = new HashSet<Tip>();
         }
 
@@ -22,6 +23,7 @@ namespace HormoneTracker.Core.Models
 
         public virtual Doctor? Doctor { get; set; }
         public virtual ICollection<Analysis> Analyses { get; set; }
+        public virtual ICollection<Medicine> Medicines { get; set; }
         public virtual ICollection<Tip> Tips { get; set; }
     }
 }
