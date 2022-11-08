@@ -36,7 +36,7 @@ namespace HormoneTracker.BLL.Services
         {
             var res = new ChartData();
 
-            var date = startDate ?? DateTime.Now.AddDays(30);
+            var date = startDate ?? DateTime.Now.AddDays(-30);
             List<Analysis> analyses = patient.Analyses.Where(x =>
                 x.Name == analysisName && x.Date >= date).ToList();
 
@@ -44,7 +44,11 @@ namespace HormoneTracker.BLL.Services
             {
                 foreach (var dataItem in analysis.Data)
                 {
-                    res.Data[dataItem.Name].Add((double)dataItem.NormCoefficient);
+
+                    if (!res.Data.ContainsKey(dataItem.Name))
+                        res.Data.Add(dataItem.Name, new List<double> { (double)dataItem.NormCoefficient });
+                    else
+                        res.Data[dataItem.Name].Add((double)dataItem.NormCoefficient);
                 }
             }
 

@@ -8,10 +8,6 @@ namespace HormoneTracker.DAL
 {
     public partial class HormoneTrackerDBContext : DbContext
     {
-        public HormoneTrackerDBContext()
-        {
-        }
-
         public HormoneTrackerDBContext(DbContextOptions<HormoneTrackerDBContext> options)
             : base(options)
         {
@@ -26,15 +22,6 @@ namespace HormoneTracker.DAL
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<Status> Statuses { get; set; } = null!;
         public virtual DbSet<Tip> Tips { get; set; } = null!;
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=PRUDIUSVLADPC\\DEV;Initial Catalog=HormoneTrackerDB;Integrated Security=True");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,8 +54,8 @@ namespace HormoneTracker.DAL
                     .WithMany(p => p.Analyses)
                     .UsingEntity<Dictionary<string, object>>(
                         "AnalysisDatum",
-                        l => l.HasOne<Datum>().WithMany().HasForeignKey("DataId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AnalysisData_Data"),
-                        r => r.HasOne<Analysis>().WithMany().HasForeignKey("AnalysisId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AnalysisData_Analysis"),
+                        l => l.HasOne<Datum>().WithMany().HasForeignKey("DataId").OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_AnalysisData_Data"),
+                        r => r.HasOne<Analysis>().WithMany().HasForeignKey("AnalysisId").OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_AnalysisData_Analysis"),
                         j =>
                         {
                             j.HasKey("AnalysisId", "DataId");

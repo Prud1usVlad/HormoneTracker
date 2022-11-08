@@ -22,6 +22,7 @@ namespace HormoneTracker.BLL.Services
 
         public List<Recomendation> GetRecomendations(Analysis analysis)
         {
+            var temp = _dbContext.Data.ToList();
             var res = new List<Recomendation>();
 
             foreach (var dataItem in analysis.Data)
@@ -29,28 +30,26 @@ namespace HormoneTracker.BLL.Services
                 var products = _dbContext.Products.Where(x => x.Data.Any(d => d.Name == dataItem.Name));
                 products = products.OrderBy(x => x.Data.Where(d => d.Name == dataItem.Name).First().NormCoefficient);
 
-                if (dataItem.NormCoefficient > 2d)
+                if (dataItem.NormCoefficient > 200)
                 {
                     res.Add(new Recomendation
                     {
                         Header = $"Reduce amount of {dataItem.Name}.",
                         Body = $"In your analysis we found a big amount of {dataItem.Name}." +
-                        $" It is {(dataItem.NormCoefficient - 1) * 100}% higer than norm!" +
+                        $" It is {dataItem.NormCoefficient - 100}% higer than norm!" +
                         $" We prepared some products that might help.",
-                        Datum = dataItem,
-                        Products = products.Take(3).ToList()
+                        Products = products.ToList().Take(3).ToList()
                     });
                 }
-                else if (dataItem.NormCoefficient < 0.5)
+                else if (dataItem.NormCoefficient < 50)
                 {
                     res.Add(new Recomendation
                     {
                         Header = $"Increase amount of {dataItem.Name}.",
                         Body = $"In your analysis we found a small amount of {dataItem.Name}." +
-                        $" It is {(dataItem.NormCoefficient - 1) * 100}% lower than norm!" +
+                        $" It is {dataItem.NormCoefficient - 100}% lower than norm!" +
                         $" We prepared some products that might help.",
-                        Datum = dataItem,
-                        Products = products.TakeLast(3).ToList()
+                        Products = products.ToList().TakeLast(3).ToList()
                     });
                 }
             }

@@ -1,4 +1,4 @@
-﻿using HormoneTracker.BLL.Services;
+﻿using HormoneTracker.BLL.Interfaces;
 using HormoneTracker.Core.Models;
 using HormoneTracker.Core.Models.ServicesModels;
 using HormoneTracker.DAL;
@@ -13,10 +13,10 @@ namespace HormoneTracker.Controllers
     public class RecomendationsController : ControllerBase
     {
         private readonly HormoneTrackerDBContext _context;
-        private readonly BasicRecomendationsService _recomendationsService;
+        private readonly IRecomendationService _recomendationsService;
 
         public RecomendationsController(HormoneTrackerDBContext context,
-            BasicRecomendationsService recomendationsService)
+            IRecomendationService recomendationsService)
         {
             _context = context;
             _recomendationsService = recomendationsService;

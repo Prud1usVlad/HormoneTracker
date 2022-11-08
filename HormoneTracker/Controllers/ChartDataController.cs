@@ -1,4 +1,4 @@
-﻿using HormoneTracker.BLL.Services;
+﻿using HormoneTracker.BLL.Interfaces;
 using HormoneTracker.Core.Models;
 using HormoneTracker.Core.Models.ServicesModels;
 using HormoneTracker.DAL;
@@ -13,10 +13,10 @@ namespace HormoneTracker.Controllers
     public class ChartDataController : ControllerBase
     {
         private readonly HormoneTrackerDBContext _context;
-        private readonly BasicChartDataService _chartService;
+        private readonly IChartDataService _chartService;
 
         public ChartDataController(HormoneTrackerDBContext context,
-            BasicChartDataService chartService)
+            IChartDataService chartService)
         {
             _context = context;
             _chartService = chartService;
