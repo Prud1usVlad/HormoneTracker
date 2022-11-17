@@ -16,6 +16,8 @@ namespace HormoneTracker.Controllers
         private readonly HormoneTrackerDBContext _context;
         private readonly IConfiguration _configuration;
 
+        private string role;
+
         public TokenController(HormoneTrackerDBContext context,
             IConfiguration configuration)
         {
@@ -47,8 +49,14 @@ namespace HormoneTracker.Controllers
                     var token = tokenHandler.CreateToken(tokenDescriptor);
                     var jwtToken = tokenHandler.WriteToken(token);
                     var stringToken = tokenHandler.WriteToken(token);
+                    var result = new Dictionary<string, string>()
+                    {
+                        { "Token", stringToken },
+                        { "Role", role },
+                    };
 
-                    return Ok(stringToken);
+
+                    return Ok(result);
                 }
                 return Unauthorized("Acces denied");
             }
@@ -65,9 +73,24 @@ namespace HormoneTracker.Controllers
             bool validated = false;
 
             validated |= _context.Admins.Where(a => a.Email.Equals(email) && a.Password.Equals(pass)).Count() == 1;
-            validated |= _context.Doctors.Where(a => a.Email.Equals(email) && a.Password.Equals(pass)).Count() == 1;
-            validated |= _context.Patients.Where(a => a.Email.Equals(email) && a.Password.Equals(pass)).Count() == 1;
+            if (validated)
+            {
+                role = "admin";
+                return validated;
+            }
 
+
+            validated |= _context.Doctors.Where(a => a.Email.Equals(email) && a.Password.Equals(pass)).Count() == 1;
+            if (validated)
+            {
+                role = "doctor";
+                return validated;
+            }
+
+            validated |= _context.Patients.Where(a => a.Email.Equals(email) && a.Password.Equals(pass)).Count() == 1;
+            if (validated)
+                role = "patient";
+            
             return validated;
         }
 
