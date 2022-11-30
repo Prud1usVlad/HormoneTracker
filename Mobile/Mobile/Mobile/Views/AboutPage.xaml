@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobile.Views.AboutPage"
+             xmlns:vm="clr-namespace:Mobile.ViewModels"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <ScrollView>
+            <StackLayout BackgroundColor="Beige">
+                <Label Text="{Binding Header}"
+                   FontSize="50"
+                   FontAttributes="Bold"
+                   Margin="30"
+                   TextColor="Black"/>
+
+                <Label Text="{Binding Body}"
+                   FontAttributes="Italic"
+                   Margin="30,60"
+                   TextColor="Gray"
+                   FontSize="16"/>
+
+                <Frame>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Last analysis results:"
+                           FontSize="20"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                           Grid.ColumnSpan="2"/>
+                        <Label Text="Value:"
+                           FontSize="20"
+                           TextColor="Black"
+                           Grid.Row="1" />
+                        <Label Text="{Binding DisplayData.Value}"
+                           FontSize="20"
+                           TextColor="Black"
+                           Grid.Column="1"
+                           Grid.Row="1"/>
+                        <Label Text="Normal coeffifcient:"
+                           FontSize="20"
+                           TextColor="Black"
+                           Grid.Row="2"/>
+                        <Label Text="{Binding DisplayData.NormCoefficient}"
+                           FontSize="20"
+                           TextColor="Black"
+                           Grid.Column="1"
+                           Grid.Row="1"/>
+                    </Grid>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>

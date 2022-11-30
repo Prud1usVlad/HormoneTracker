@@ -24,7 +24,6 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Tips
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Tip>>> GetTips()
         {
             return await _context.Tips.ToListAsync();
@@ -32,7 +31,6 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Tips/5
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<ActionResult<Tip>> GetTip(int id)
         {
             var tip = await _context.Tips.FindAsync(id);
@@ -48,7 +46,6 @@ namespace HormoneTracker.Controllers.CrudControllers
         // PUT: api/Tips/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize]
         public async Task<IActionResult> PutTip(int id, Tip tip)
         {
             if (id != tip.TipId)
@@ -80,7 +77,6 @@ namespace HormoneTracker.Controllers.CrudControllers
         // POST: api/Tips
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<Tip>> PostTip(Tip tip)
         {
             _context.Tips.Add(tip);
@@ -91,7 +87,6 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // DELETE: api/Tips/5
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> DeleteTip(int id)
         {
             var tip = await _context.Tips.FindAsync(id);

@@ -24,7 +24,6 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Medicines
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Medicine>>> GetMedicines()
         {
             return await _context.Medicines.ToListAsync();
@@ -32,7 +31,6 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Medicines/5
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<ActionResult<Medicine>> GetMedicine(int id)
         {
             var medicine = await _context.Medicines.FindAsync(id);
@@ -48,7 +46,6 @@ namespace HormoneTracker.Controllers.CrudControllers
         // PUT: api/Medicines/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize]
         public async Task<IActionResult> PutMedicine(int id, Medicine medicine)
         {
             if (id != medicine.MedicineId)
@@ -80,7 +77,6 @@ namespace HormoneTracker.Controllers.CrudControllers
         // POST: api/Medicines
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<Medicine>> PostMedicine(Medicine medicine)
         {
             _context.Medicines.Add(medicine);
@@ -105,7 +101,6 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // DELETE: api/Medicines/5
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> DeleteMedicine(int id)
         {
             var medicine = await _context.Medicines.FindAsync(id);

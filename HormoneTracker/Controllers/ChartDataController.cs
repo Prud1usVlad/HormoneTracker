@@ -24,7 +24,6 @@ namespace HormoneTracker.Controllers
 
         // GET: api/Charts/Analysis
         [HttpGet]
-        [Authorize]
         [Route("Analysis/{analysisId}")]
         public ChartData GetAnalysisData(int analysisId)
         {
@@ -35,7 +34,6 @@ namespace HormoneTracker.Controllers
 
         // GET: api/Charts/Analysis
         [HttpGet]
-        [Authorize]
         [Route("Patient/{patientId}/{analysisName}")]
         public ChartData GetPatientAnalysisData(int patientId, string analysisName)
         {

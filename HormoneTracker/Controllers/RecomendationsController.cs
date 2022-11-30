@@ -24,7 +24,6 @@ namespace HormoneTracker.Controllers
 
         // GET: api/Recomendations/Analysis
         [HttpGet]
-        [Authorize]
         [Route("Patient/{patientId}")]
         public List<Recomendation> GetPatientRecomendations(int patientId)
         {
@@ -35,7 +34,6 @@ namespace HormoneTracker.Controllers
 
         // GET: api/Recomendations/Analysis
         [HttpGet]
-        [Authorize]
         [Route("Analysis/{analysisId}")]
         public List<Recomendation> GetPatientAnalysisData(int analysisId)
         {

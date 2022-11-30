@@ -24,7 +24,6 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Data
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Datum>>> GetData()
         {
             return await _context.Data.ToListAsync();
@@ -32,7 +31,6 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // GET: api/Data/5
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<ActionResult<Datum>> GetDatum(int id)
         {
             var datum = await _context.Data.FindAsync(id);
@@ -48,7 +46,6 @@ namespace HormoneTracker.Controllers.CrudControllers
         // PUT: api/Data/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize]
         public async Task<IActionResult> PutDatum(int id, Datum datum)
         {
             if (id != datum.DataId)
@@ -80,7 +77,6 @@ namespace HormoneTracker.Controllers.CrudControllers
         // POST: api/Data
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<Datum>> PostDatum(Datum datum)
         {
             _context.Data.Add(datum);
@@ -105,7 +101,6 @@ namespace HormoneTracker.Controllers.CrudControllers
 
         // DELETE: api/Data/5
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> DeleteDatum(int id)
         {
             var datum = await _context.Data.FindAsync(id);

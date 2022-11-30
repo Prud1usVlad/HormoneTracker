@@ -17,6 +17,7 @@ namespace HormoneTracker.Controllers
         private readonly IConfiguration _configuration;
 
         private string role;
+        private string userId;
 
         public TokenController(HormoneTrackerDBContext context,
             IConfiguration configuration)
@@ -53,6 +54,7 @@ namespace HormoneTracker.Controllers
                     {
                         { "Token", stringToken },
                         { "Role", role },
+                        { "UserId", GetUserId(credentials["Email"], role).ToString() }
                     };
 
 
@@ -94,6 +96,20 @@ namespace HormoneTracker.Controllers
             return validated;
         }
 
-
+        private int GetUserId(string email, string role)
+        {
+            if (role == "admin")
+            {
+                return _context.Admins.First(a => a.Email == email).AdminId;
+            }
+            else if (role == "doctor")
+            {
+                return _context.Doctors.First(d => d.Email == email).DoctorId;
+            }
+            else
+            {
+                return _context.Patients.First(p => p.Email == email).PatientId;
+            }
+        }
     }
 }
