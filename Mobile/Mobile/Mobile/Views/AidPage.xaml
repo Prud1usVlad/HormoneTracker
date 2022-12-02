@@ -1,12 +1,138 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mobile.Views.AidPage">
+             x:Class="Mobile.Views.AidPage"
+             xmlns:viewmodels="clr-namespace:Mobile.ViewModels" 
+             Title="Aid">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid BackgroundColor="Beige">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <ScrollView Padding="40">
+                <StackLayout>
+                    <StackLayout BindingContext="{Binding Doctor}">
+                        <Label Text="Doctor info"
+                           FontSize="26"
+                           TextColor="Black"
+                           Margin="0,0,0,20"/>
+                        <Label Text="Name"
+                           FontSize="12"
+                           TextColor="DimGray"/>
+                        <Label Text="{Binding Name}"
+                           FontSize="18"
+                           TextColor="Black"/>
+                        <Label Text="LastName"
+                           FontSize="12"
+                           TextColor="DimGray"/>
+                        <Label Text="{Binding LastName}"
+                           FontSize="18"
+                           TextColor="Black"/>
+                        <Label Text="MidName"
+                           FontSize="12"
+                           TextColor="DimGray"/>
+                        <Label Text="{Binding MidName}"
+                           FontSize="18"
+                           TextColor="Black"/>
+                        <Label Text="Phone"
+                           FontSize="12"
+                           TextColor="DimGray"/>
+                        <Label Text="{Binding Phone}"
+                           FontSize="18"
+                           TextColor="Black"/>
+                        <Label Text="Email"
+                           FontSize="12"
+                           TextColor="DimGray"/>
+                        <Label Text="{Binding Email}"
+                           FontSize="18"
+                           TextColor="Black"/>
+                        <Label Text="Medicines"
+                           FontSize="26"
+                           TextColor="Black"
+                           Margin="0,20,0,20"/>
+                    </StackLayout>
+                    <Button Margin="20"
+                            Text="Add medicine"
+                            Command="{Binding AddMedicine}"></Button>
+                    <CollectionView ItemsSource="{Binding Medicines}"
+                                        x:Name="CV"
+                                    SelectionMode="Single"
+                                    SelectionChangedCommand="{Binding ItemTapped}"
+                                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference CV}}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame>
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="{Binding Name}"
+                                           FontSize="22"
+                                           FontAttributes="Bold"
+                                           Grid.ColumnSpan="2"
+                                           TextColor="Black"/>
+                                        <Label Text="Amount last"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           Grid.Row="1"
+                                           TextColor="Black"/>
+                                        <Label Text="{Binding AmountLast}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           TextColor="Black"/>
+                                        <Label Text="Last dose date"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           Grid.Row="2"
+                                           TextColor="Black"/>
+                                        <Label Text="{Binding LastDoseDate}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           Grid.Row="2"
+                                           Grid.Column="1"
+                                           TextColor="Black"/>
+                                        <Label Text="{Binding Discription}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           Grid.Row="3"
+                                           TextColor="Black"
+                                               Grid.ColumnSpan="3"
+                                               />
+                                        <Button Grid.RowSpan="2"
+                                            Grid.Column="2"
+                                            ImageSource="thrashcan_icon"
+                                                HorizontalOptions="Fill"
+                                            BackgroundColor="Transparent"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:AidViewModel}}, Path=DeleteMedicine}"
+                                            CommandParameter="{Binding MedicineId}"/>
+
+
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+                
+            </ScrollView>
+
+            <Button Grid.Row="1"
+                    Margin="30"
+                    BackgroundColor="IndianRed"
+                    Text="Call Doctor"
+                    FontSize="24"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

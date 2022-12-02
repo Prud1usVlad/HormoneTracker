@@ -47,12 +47,13 @@ namespace Mobile.ViewModels
             if (await _accountService.Login(Email, Password))
             {
                 // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
-                await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+                //await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+                App.Current.MainPage = new AppShell();
             }
             else
             {
                 Password = "";
-                await App.Current.MainPage.DisplayAlert("Login failed", "An error accured whil logging", "Ok");
+                await App.Current.MainPage.DisplayAlert("Login failed", "An error accured while logging", "Ok");
             }
         }
     }

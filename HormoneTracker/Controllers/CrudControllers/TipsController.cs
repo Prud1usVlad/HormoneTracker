@@ -43,6 +43,14 @@ namespace HormoneTracker.Controllers.CrudControllers
             return tip;
         }
 
+        [HttpGet("ByUserId/{id}")]
+        public async Task<ActionResult<List<Tip>>> GetTipsByUserId(int id)
+        {
+            var tips = _context.Tips.Where(t => t.PatientId == id).ToList();
+
+            return tips;
+        }
+
         // PUT: api/Tips/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

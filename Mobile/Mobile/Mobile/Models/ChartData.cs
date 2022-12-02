@@ -12,5 +12,11 @@ namespace Mobile.Models
         public Dictionary<string, List<double>> Data { get; set; }
             = new Dictionary<string, List<double>>();
 
+        public ChartData()
+        {
+            XAxisLabels = new List<string>();
+            Data = new Dictionary<string, List<double>>();
+        } 
+
     }
 }

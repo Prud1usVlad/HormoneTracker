@@ -64,6 +64,12 @@ namespace Mobile.ViewModels
             Body = "Start tracking your health state now! See your last analysis results below, and sent them to server, to share with your doctor and be availible to recive recomendations from us!";
 
             _analysisService = DependencyService.Get<IAnalysisService>();
+
+            LoadAnalysis = new Command(async () => await OnLoad());
+            SaveAnalysis = new Command(async () => await OnSave());
+
+            Analysis = new Analysis();
+            DisplayData = new Datum();
         }
 
         public async Task OnLoad()
@@ -71,6 +77,11 @@ namespace Mobile.ViewModels
             int id = int.Parse(App.Current.Properties["userId"].ToString());
             Analysis = await _analysisService.GetLastLocalAnalysis(id);
             DisplayData = analysis.Data.First();
+        }
+
+        public async Task OnSave()
+        {
+            await _analysisService.AddAnalysis(Analysis);
         }
 
     }

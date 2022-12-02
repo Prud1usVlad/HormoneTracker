@@ -11,7 +11,7 @@
         <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
             <Frame BackgroundColor="White" HasShadow="False">
                 <StackLayout Orientation="Vertical" Spacing="10">
-                    <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Login"   
+                    <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email"   
                            HeightRequest="40"
                            Keyboard="Email"/>
                     <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password"   

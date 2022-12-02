@@ -43,6 +43,19 @@ namespace HormoneTracker.Controllers.CrudControllers
             return doctor;
         }
 
+        [HttpGet("ByUserId/{id}")]
+        public async Task<ActionResult<Doctor>> GetDoctorByUserId(int id)
+        {
+            var doctor = _context.Doctors.FirstOrDefault(d => d.Patients.Any(p => p.PatientId == id));
+
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+
+            return doctor;
+        }
+
         // PUT: api/Doctors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

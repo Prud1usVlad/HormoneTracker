@@ -1,12 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mobile.Views.RecomendationsPage">
+             x:Class="Mobile.Views.RecomendationsPage"
+             Title="Recomendations">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView Padding="40"
+                    BackgroundColor="Beige">
+            <StackLayout>
+                <Label Text="Tips"
+                           FontSize="26"
+                           TextColor="Black"
+                           Margin="0,0,0,20"/>
+                <CollectionView x:Name="TipsView"
+                                HeightRequest="300">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame>
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Text="{Binding Date}"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           Grid.ColumnSpan="2"
+                                           TextColor="Black"/>
+                                    <Label Text="Comment"
+                                           FontSize="12"
+                                           Grid.Row="1"
+                                           FontAttributes="Bold"
+                                           TextColor="DimGray"/>
+                                    <Label Text="{Binding Comment}"
+                                           FontSize="14"
+                                           Grid.Row="2"
+                                           TextColor="DimGray"/>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Label Text="Recomendations"
+                           FontSize="26"
+                           TextColor="Black"
+                           Margin="0,20,0,20"/>
+                <CollectionView x:Name="RecomendationsView"
+                                HeightRequest="400">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame>
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Text="{Binding Header}"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           TextColor="Black"/>
+                                    <Label Text="{Binding Body}"
+                                           FontSize="14"
+                                           Grid.Row="1"
+                                           TextColor="DimGray"/>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

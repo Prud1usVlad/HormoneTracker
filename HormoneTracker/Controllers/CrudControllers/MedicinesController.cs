@@ -42,6 +42,13 @@ namespace HormoneTracker.Controllers.CrudControllers
 
             return medicine;
         }
+        [HttpGet("ByUserId/{id}")]
+        public async Task<ActionResult<List<Medicine>>> GetMedicinesByUserId(int id)
+        {
+            var medicines = _context.Medicines.Where(m => m.PatientId == id).ToList();
+
+            return medicines;
+        }
 
         // PUT: api/Medicines/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

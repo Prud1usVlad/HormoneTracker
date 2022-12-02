@@ -14,10 +14,17 @@ namespace Mobile
             InitializeComponent();
 
             Properties["apiAddress"] = "http://192.168.1.239:5070/api/";
+            Properties["userId"] = 5;
 
-            //DependencyService.Register<MockDataStore>();
-            DependencyService.Register<AccountService>();
+            DependencyService.Register<IAccountService, AccountService>();
+            DependencyService.Register<IAnalysisService, AnalysisService>();
+            DependencyService.Register<IAidService, AidService>();
+            DependencyService.Register<IRecomendationsService, RecomendationsService>();
+            DependencyService.Register<IStateService, StateService>();
+
             MainPage = new LoginPage();
+
+            //MainPage = new AppShell();
         }
 
         protected override void OnStart()

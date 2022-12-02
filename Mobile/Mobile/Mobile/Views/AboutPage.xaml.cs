@@ -16,5 +16,12 @@ namespace Mobile.Views
             ViewModel = new AboutViewModel();
             BindingContext = ViewModel;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            ViewModel.LoadAnalysis.Execute(null);
+        }
     }
 }

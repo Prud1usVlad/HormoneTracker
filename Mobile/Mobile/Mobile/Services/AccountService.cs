@@ -23,7 +23,7 @@ namespace Mobile.Services
 
         public async Task<bool> Login(string email, string password)
         {
-            var response = await _httpClient.PostAsync("Security/Tokens",
+            var response = await _httpClient.PostAsync("Security/Token",
                 new StringContent(JsonSerializer.Serialize(new { Email = email, Password = password }),
                     Encoding.UTF8, "application/json"));
 

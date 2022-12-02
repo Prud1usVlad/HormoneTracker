@@ -32,8 +32,8 @@
     <TabBar>
         <ShellContent Title="About" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
         <ShellContent Title="State" Icon="icon_about.png" Route="StatePage" ContentTemplate="{DataTemplate local:StatePage}" />
-        <ShellContent Title="Recomendations" Icon="icon_about.png" Route="RecomendationsPage" ContentTemplate="{DataTemplate local:RecomendationsPage}" />
-        <ShellContent Title="Aid" Icon="icon_about.png" Route="AidPage" ContentTemplate="{DataTemplate local:AidPage}" />
+        <ShellContent Title="Recomendations" Icon="rec_icon.png" Route="RecomendationsPage" ContentTemplate="{DataTemplate local:RecomendationsPage}" />
+        <ShellContent Title="Aid" Icon="aid_icon.png" Route="AidPage" ContentTemplate="{DataTemplate local:AidPage}" />
     </TabBar>
 
     <!--

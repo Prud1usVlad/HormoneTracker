@@ -10,7 +10,7 @@ namespace Mobile.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        //public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        protected int userId = int.Parse(App.Current.Properties["userId"].ToString());
 
         bool isBusy = false;
         public bool IsBusy

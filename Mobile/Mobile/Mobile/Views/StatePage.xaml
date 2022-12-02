@@ -1,12 +1,80 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mobile.Views.StatePage">
+             x:Class="Mobile.Views.StatePage"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             BackgroundColor="Beige">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="40">
+            <Label Text="Hemoglobin Chart"
+                   FontSize="26"
+                   TextColor="Black"
+                   Margin="0,0,0,20"/>
+            <microcharts:ChartView x:Name="ChartView"
+                                   Chart="{Binding Chart}"
+                                   HeightRequest="300"
+                                   />
+            <Label Text="Analyses"
+                   FontSize="26"
+                   TextColor="Black"
+                   Margin="0,20,0,20"/>
+            <CollectionView ItemsSource="{Binding Analyses}"
+                            x:Name="CV">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame>
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="45" />
+                                    <RowDefinition Height="140"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Text="{Binding Name}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="Black"/>
+                                <Label Text="{Binding Date}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           Grid.Column="1"
+                                           TextColor="Black"/>
+                                <CollectionView ItemsSource="{Binding Data}"
+                                                Grid.Row="1">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout>
+                                                <Label Text="Data name"
+                                                       FontSize="12"
+                                                       TextColor="DimGray"/>
+                                                <Label Text="{Binding Name}"
+                                                       FontSize="16"
+                                                       TextColor="Black"/>
+                                                <Label Text="Data value"
+                                                       FontSize="12"
+                                                       TextColor="DimGray"/>
+                                                <Label Text="{Binding Value}"
+                                                       FontSize="16"
+                                                       TextColor="Black"/>
+                                                <Label Text="Coefficient"
+                                                       FontSize="12"
+                                                       TextColor="DimGray"/>
+                                                <Label Text="{Binding NormCoefficient}"
+                                                       FontSize="16"
+                                                       TextColor="Black"/>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

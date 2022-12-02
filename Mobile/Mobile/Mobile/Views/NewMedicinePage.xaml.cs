@@ -11,24 +11,17 @@ using Xamarin.Forms.Xaml;
 namespace Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class StatePage : ContentPage
+    public partial class NewMedicinePage : ContentPage
     {
-        public StateViewModel viewModel; 
+        public NewMedicineViewModel viewModel;
 
-        public StatePage()
+        public NewMedicinePage()
         {
             InitializeComponent();
+            viewModel = new NewMedicineViewModel();
 
-            viewModel = new StateViewModel();
             BindingContext = viewModel;
-        }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            viewModel.LoadAnalyses.Execute(null);
-            viewModel.LoadChartData.Execute(null);
         }
     }
 }

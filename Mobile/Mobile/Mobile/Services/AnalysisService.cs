@@ -8,34 +8,23 @@ using System.Threading.Tasks;
 
 namespace Mobile.Services
 {
-    public class AnalysisService : IAnalysisService
+    public class AnalysisService : HttpClientService, IAnalysisService
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _options;
-
-        public AnalysisService()
-        {
-            _httpClient = new HttpClient()
-            {
-                BaseAddress = new Uri(App.Current.Properties["apiAddress"].ToString()),
-            };
-
-            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            _options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-            };
-        }
+        public AnalysisService() : base() { }
 
         public async Task AddAnalysis(Analysis analysis)
         {
-            var responce = await _httpClient.PostAsync("Analysis",
+            var responce = await _httpClient.PostAsync("Analyses",
                 new StringContent(JsonSerializer.Serialize(analysis),
                     Encoding.UTF8, "application/json"));
 
             if (!responce.IsSuccessStatusCode)
             {
                 await App.Current.MainPage.DisplayAlert("Error", "Error occured while trying to sent data", "Ok");
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("Success", "Analysis data was successfuly sent", "Ok");
             }
         }
 
